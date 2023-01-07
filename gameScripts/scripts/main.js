@@ -55,7 +55,12 @@ export async function main(ns) {
 		if (countNewRootServers > 0 || startBit) {
 			ns.exec(ScriptPaths.runHomeServer, OwnServerList.home);
 			ns.exec(ScriptPaths.runMoneyServers, OwnServerList.home);
-			ns.exec(ScriptPaths.runExpFarmServers, OwnServerList.home, 1, 'joesguns');
+			ns.exec(
+				ScriptPaths.runExpFarmServers,
+				OwnServerList.home,
+				1,
+				OwnServerList.targetFarmServers
+			);
 			if (!ns.scriptRunning(ScriptPaths.hackNodes, OwnServerList.home)) {
 				ns.exec(ScriptPaths.hackNodes, OwnServerList.home);
 			}

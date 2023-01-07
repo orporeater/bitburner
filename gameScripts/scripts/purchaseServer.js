@@ -68,7 +68,12 @@ export async function main(ns) {
 			ns.exec(ScriptPaths.runMoneyServers, OwnServerList.home);
 		}
 		if (serverType === OwnServerList.farmServers) {
-			ns.exec(ScriptPaths.runExpFarmServers, OwnServerList.home);
+			ns.exec(
+				ScriptPaths.runExpFarmServers,
+				OwnServerList.home,
+				1,
+				OwnServerList.targetFarmServers
+			);
 		}
 	}
 }

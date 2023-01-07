@@ -3,6 +3,7 @@ export const OwnServerList = {
 	home: 'home',
 	farmServers: 'farmServer',
 	moneyServers: 'moneyServer',
+	targetFarmServers: 'joesguns',
 };
 
 export const HacknetNodes = {

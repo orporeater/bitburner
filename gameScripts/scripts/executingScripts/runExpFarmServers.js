@@ -2,6 +2,7 @@ import { OwnServerList, ScriptPaths } from 'scripts/enums/enums';
 
 /** @param {NS} ns */
 export async function main(ns) {
+	const target = ns.args[0];
 	const farmServers = [];
 	let serverNumber = 0;
 
@@ -11,7 +12,6 @@ export async function main(ns) {
 		farmServers.push(OwnServerList.farmServers + '-' + serverNumber.toString());
 		serverNumber++;
 	}
-	const target = ns.args[0];
 	const scriptName = ScriptPaths.expFarm;
 
 	for (let farmServer of farmServers) {
