@@ -5,7 +5,7 @@ export async function main(ns) {
 	const servers = new Servers(ns);
 	const dataList = servers.documentsLit;
 	for (let entry of dataList) {
-		ns.tprint(entry);
+		ns.tprintf(entry);
 		ns.scp(entry.files, 'home', entry.server);
 	}
 }

@@ -46,7 +46,7 @@ export async function main(ns) {
 		let dashLvl = dash(4, serverStats.requiredHackingSkill.toString().length);
 		let dashName = dash(20, server.length);
 		let dashRam = dash(8, serverStats.maxRam.toString().length);
-		ns.tprint(
+		ns.tprintf(
 			`${count} ${dashNumber} Name: ${server} ${dashName} Lvl: ${
 				serverStats.requiredHackingSkill
 			} ${dashLvl} root: ${rootAccess} - backD: ${backdoor} - ${RAM.format(

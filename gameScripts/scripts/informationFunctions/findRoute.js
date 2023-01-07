@@ -38,6 +38,6 @@ export async function main(ns) {
 	if (!isFound) {
 		ns.alert('Server not found!');
 	} else {
-		ns.tprint(results.join(' --> '));
+		ns.tprintf(results.join(' --> '));
 	}
 }

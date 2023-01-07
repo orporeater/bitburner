@@ -11,12 +11,12 @@ export async function main(ns) {
 		unit: 'gigabyte',
 	});
 
-	ns.tprint(`Maximum GB :${dataF.format(ns.getPurchasedServerMaxRam())}`);
+	ns.tprintf(`Maximum GB :${dataF.format(ns.getPurchasedServerMaxRam())}`);
 
 	for (let i = 1; i <= 20; i++) {
 		let ram = Math.pow(2, i);
 		let price = ns.getPurchasedServerCost(ram);
-		ns.tprint(
+		ns.tprintf(
 			`${i} -- Server ram: ${dataF.format(ram)} -- Price: ${priceF.format(
 				price
 			)}`
