@@ -8,3 +8,17 @@ run scripts/main.js
 
 - Imformations about factions are to find in `factions.md`
 - Informations about unique Augemntations are in `uniqueAugmentations.md` listed
+
+# .vscode/settings.json
+
+```json
+{
+	"bitburner.authToken": yourToken,
+	"bitburner.scriptRoot": "./gameScripts",
+	"javascript.preferences.importModuleSpecifier": "non-relative",
+	"files.exclude": {
+		"jsconfig.json": true,
+		"NetscriptDefinitions.d.ts": true
+	}
+}
+```
