@@ -13,9 +13,10 @@ export async function main(ns: NS): Promise<void> {
 			whileCounter < HacknetNode.MAX_NUMBER
 		) {
 			const nodeCost = ns.hacknet.getPurchaseNodeCost();
-
-			if (nodeCost < moneyAvailable) {
-				ns.hacknet.purchaseNode();
+			if (numberNodes < HacknetNode.MAX_NUMBER) {
+				if (nodeCost < moneyAvailable) {
+					ns.hacknet.purchaseNode();
+				}
 			}
 
 			whileCounter++;

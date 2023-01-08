@@ -2,7 +2,7 @@ import { NS, Server } from '@ns';
 import { ServersList } from '/scripts/classes/serverslist.js';
 import { OwnServerList, ScriptPath } from '/scripts/enums/enums.js';
 
-export async function main(ns: NS): void {
+export async function main(ns: NS): Promise<void> {
 	const servers: ServersList = new ServersList(ns);
 
 	let startBit = true;
@@ -77,7 +77,7 @@ export async function main(ns: NS): void {
 				ScriptPath.RUN_EXP_SERVERS,
 				OwnServerList.HOME,
 				1,
-				OwnServerList.ta
+				OwnServerList.TARGET_EXP_FARM_SERVERS
 			);
 			if (!ns.scriptRunning(ScriptPath.HACK_NODES, OwnServerList.HOME)) {
 				ns.exec(ScriptPath.HACK_NODES, OwnServerList.HOME);
