@@ -13,11 +13,18 @@ run scripts/main.js
 
 ```json
 {
-	"bitburner.authToken": yourToken,
-	"bitburner.scriptRoot": "./gameScripts",
+	// Linter Settings
+	"typescript.validate.enable": true,
+	"javascript.validate.enable": false,
+	"eslint.validate": ["typescript", "typescriptreact"],
+	"eslint.workingDirectories": ["./src"],
+
+	// Bitburner Extension Settings
+	"bitburner.authToken": "YourToken",
+	"bitburner.scriptRoot": "./dist/",
 	"javascript.preferences.importModuleSpecifier": "non-relative",
+	"typescript.preferences.importModuleSpecifier": "non-relative",
 	"files.exclude": {
-		"jsconfig.json": true,
 		"NetscriptDefinitions.d.ts": true
 	}
 }
