@@ -87,6 +87,6 @@ export async function main(ns: NS): Promise<void> {
 			}
 			startBit = false;
 		}
-		await ns.sleep(10000);
+		await ns.sleep(20000);
 	}
 }
