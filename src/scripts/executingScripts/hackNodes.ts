@@ -5,7 +5,7 @@ export async function main(ns: NS): Promise<void> {
 	while (true) {
 		let whileCounter = 0;
 
-		const numberNodes = ns.hacknet.numNodes();
+		let numberNodes = ns.hacknet.numNodes();
 		const moneyAvailable = ns.getPlayer().money;
 
 		while (
@@ -18,6 +18,7 @@ export async function main(ns: NS): Promise<void> {
 					ns.hacknet.purchaseNode();
 				}
 			}
+			numberNodes = ns.hacknet.numNodes();
 
 			whileCounter++;
 		}
@@ -54,6 +55,7 @@ export async function main(ns: NS): Promise<void> {
 				}
 			}
 		}
-		await ns.sleep(60000);
+		// await ns.sleep(5000);
+		await ns.sleep(600000);
 	}
 }

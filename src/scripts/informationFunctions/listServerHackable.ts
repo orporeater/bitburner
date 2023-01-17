@@ -3,6 +3,7 @@ import { ServersList } from '/scripts/classes/serverslist.js';
 import { DATATYPE, MONEY } from '/scripts/formats/formats.js';
 
 export async function main(ns: NS) {
+	const divideSymbol = '_';
 	const func = ns.args[0] ? ns.args[0] : 0;
 	const servers = new ServersList(ns);
 	const serversHackable = servers.hackable;
@@ -20,16 +21,25 @@ export async function main(ns: NS) {
 				printing(server);
 				count++;
 			}
+			break;
+		case 2:
+			for (const server of servers.ownedServer) {
+				printing(server);
+				count++;
+			}
+			break;
 	}
+
 	function dash(minLength: number, length: number): string {
 		const diff = minLength - length;
 		let dashString = '';
 		for (let i = 0; i < diff; i++) {
 			dashString = dashString + ' ';
 		}
-		dashString = dashString + '-';
+		dashString = dashString + divideSymbol;
 		return dashString;
 	}
+
 	function printing(server: string): void {
 		const serverStats = ns.getServer(server);
 		const rootAccess = serverStats.hasAdminRights ? 'YES' : 'NO ';
@@ -41,7 +51,11 @@ export async function main(ns: NS) {
 		ns.tprintf(
 			`${count} ${dashNumber} Name: ${server} ${dashName} Lvl: ${
 				serverStats.requiredHackingSkill
-			} ${dashLvl} root: ${rootAccess} - backD: ${backdoor} - ${DATATYPE.GB.format(
+			} ${dashLvl} root: ${rootAccess} ${divideSymbol} backD: ${backdoor} ${divideSymbol} Ports: ${
+				serverStats.openPortCount
+			}/${
+				serverStats.numOpenPortsRequired
+			} ${divideSymbol} ${DATATYPE.GB.format(
 				serverStats.maxRam
 			)} ${dashRam} ${MONEY.format(serverStats.moneyMax)}`
 		);
