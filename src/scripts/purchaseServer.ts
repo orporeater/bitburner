@@ -1,11 +1,12 @@
 import { NS } from '@ns';
 import { OwnServerList, ScriptPath } from '/scripts/enums/enums.js';
 import { MONEY, DATATYPE } from '/scripts/formats/formats.js';
+import { ServersList } from '/scripts/classes/serverslist.js';
 
 export async function main(ns: NS): Promise<void> {
 	const ramList: Record<string, number> = {};
-	let newServerName = '';
-	let serverNumber = 0;
+	const ownedServerList = new ServersList(ns).ownedServer;
+	const maxNewServer = ns.getPurchasedServerLimit() - ownedServerList.length;
 
 	const serverType: string = (await ns.prompt(
 		'What kind of a server you want to purchase?',
@@ -14,26 +15,6 @@ export async function main(ns: NS): Promise<void> {
 			choices: [OwnServerList.FARM_SERVER, OwnServerList.MONEY_SERVER],
 		}
 	)) as string;
-
-	if (serverType === OwnServerList.FARM_SERVER) {
-		while (
-			ns.serverExists(OwnServerList.FARM_SERVER + '-' + serverNumber.toString())
-		) {
-			serverNumber++;
-		}
-		newServerName = OwnServerList.FARM_SERVER + '-' + serverNumber.toString();
-	}
-
-	if (serverType === OwnServerList.MONEY_SERVER) {
-		while (
-			ns.serverExists(
-				OwnServerList.MONEY_SERVER + '-' + serverNumber.toString()
-			)
-		) {
-			serverNumber++;
-		}
-		newServerName = OwnServerList.MONEY_SERVER + '-' + serverNumber.toString();
-	}
 
 	for (let i = 1; i <= 20; i++) {
 		const ram = Math.pow(2, i);
@@ -52,26 +33,41 @@ export async function main(ns: NS): Promise<void> {
 		}
 	)) as string;
 
-	const buy: boolean = (await ns.prompt(
-		`Do you want to buy a ${newServerName} with ${DATATYPE.GB.format(
-			ramList[serverRam]
-		)}. It will cost ${MONEY.format(
-			ns.getPurchasedServerCost(ramList[serverRam])
-		)}!`
-	)) as boolean;
+	const howMany: string = (await ns.prompt('How many servers you want to buy', {
+		type: 'text',
+	})) as string;
+	const numberToBuy = parseInt(howMany);
+	if (
+		typeof numberToBuy === 'number' &&
+		numberToBuy > 0 &&
+		numberToBuy <= maxNewServer
+	) {
+		let serverNumber = ownedServerList.filter((entry) =>
+			entry.includes(serverType)
+		).length;
 
-	if (buy) {
-		ns.purchaseServer(newServerName, ramList[serverRam]);
-		if (serverType === OwnServerList.MONEY_SERVER) {
-			ns.exec(ScriptPath.RUN_MONEY_SERVERS, OwnServerList.HOME);
-		}
-		if (serverType === OwnServerList.FARM_SERVER) {
-			ns.exec(
-				ScriptPath.RUN_EXP_SERVERS,
-				OwnServerList.HOME,
-				1,
-				OwnServerList.TARGET_EXP_FARM_SERVERS
-			);
+		const cost = ns.getPurchasedServerCost(ramList[serverRam]) * numberToBuy;
+		if (cost < ns.getPlayer().money) {
+			for (let i = 1; i <= numberToBuy; i++) {
+				ns.purchaseServer(
+					serverType + '-' + serverNumber.toString(),
+					ramList[serverRam]
+				);
+				ns.tprintf(`purchased ${serverType + '-' + serverNumber.toString()}`);
+				serverNumber++;
+			}
+
+			if (serverType === OwnServerList.MONEY_SERVER) {
+				ns.exec(ScriptPath.RUN_MONEY_SERVERS, OwnServerList.HOME);
+			}
+			if (serverType === OwnServerList.FARM_SERVER) {
+				ns.exec(
+					ScriptPath.RUN_EXP_SERVERS,
+					OwnServerList.HOME,
+					1,
+					OwnServerList.TARGET_EXP_FARM_SERVERS
+				);
+			}
 		}
 	}
 }

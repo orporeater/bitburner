@@ -1,11 +1,11 @@
-import { NS } from '@ns';
+import { NS, Server } from '@ns';
 import { NSEnums, OwnServerList } from '/scripts/enums/enums.js';
 import { ServersList } from '/scripts/classes/serverslist.js';
 
 export async function main(ns: NS) {
-	const test = await ns.prompt('Which server type?', {
-		type: 'text',
-		choices: [OwnServerList.MONEY_SERVER, OwnServerList.FARM_SERVER],
-	});
-	ns.tprint(test);
+	for (let i = 1; i <= 20; i++) {
+		const costUpgrade = ns.getPurchasedServerUpgradeCost('Formula', 2 ** i);
+		const costBuy = ns.getPurchasedServerCost(2 ** i);
+		ns.tprintf(`${2 ** i} - ${costUpgrade} - ${costBuy}`);
+	}
 }
